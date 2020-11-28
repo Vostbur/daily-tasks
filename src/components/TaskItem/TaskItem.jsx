@@ -3,29 +3,46 @@ import './TaskItem.css';
 
 export default class TaskItem extends Component {
 
+    state = {
+        done: false,
+        important: false
+    };
+
     onNameClick = () => {
-        console.log(`Done: ${this.props.name}`);
+        this.setState({
+            done: true
+        });
+    };
+
+    onImportantClick = () => {
+        this.setState({
+            important: true
+        });
     };
 
     render() {
-        const { name, important = false } = this.props;
+        const { name } = this.props;
+        const { done, important } = this.state;
 
-        const style = {
-            color: important ? 'steelblue' : 'black',
-            fontWeight: important ? 'bold' : 'normal'
+        let classNames = 'task-item';
+        if (done) {
+            classNames += ' done';
+        };
+        if (important) {
+            classNames += ' important';
         };
 
         return (
-            <span className='task-item'>
+            <span className={classNames}>
                 <span
                     className='task-item-name'
-                    style={style}
                     onClick={this.onNameClick}>
                     {name}
                 </span>
 
                 <button type="button"
-                    className="btn btn-outline-success btn-sm float-right">
+                    className="btn btn-outline-success btn-sm float-right"
+                    onClick={this.onImportantClick}>
                     <i className="fa fa-exclamation" />
                 </button>
 
