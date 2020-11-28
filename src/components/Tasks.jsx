@@ -1,12 +1,10 @@
 import React from 'react';
 import { TaskItem } from './TaskItem';
 
-export const Tasks = () => {
-    return <ul>
-        <li><TaskItem
-            name='Start training react app' /></li>
-        <li><TaskItem
-            name='Make coffee'
-            important /></li>
-    </ul>;
+export const Tasks = ({ tasks }) => {
+    const taskList = tasks.map((t) => {
+        const { id, ...items } = t;
+        return <li key={id}><TaskItem {...items} /></li>;
+    });
+    return <ul>{taskList}</ul>;
 };
