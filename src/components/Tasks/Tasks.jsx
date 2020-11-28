@@ -1,8 +1,8 @@
 import React from 'react';
-import { TaskItem } from './TaskItem';
+import TaskItem from '../TaskItem';
 import './Tasks.css';
 
-export const Tasks = ({ tasks }) => {
+const Tasks = ({ tasks }) => {
     const taskList = tasks.map((t) => {
         const { id, ...items } = t;
 
@@ -19,3 +19,5 @@ export const Tasks = ({ tasks }) => {
         </ul>
     );
 };
+
+export default Tasks;

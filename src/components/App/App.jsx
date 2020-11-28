@@ -1,11 +1,11 @@
 import React from 'react';
-import { Header } from './Header';
-import { SearchBar } from './SearchBar';
-import { TaskFilter } from './TaskFilter';
-import { Tasks } from './Tasks';
+import Header from '../Header/Header';
+import SearchBar from '../SearchBar/SearchBar';
+import TaskFilter from '../TaskFilter/TaskFilter';
+import Tasks from '../Tasks';
 import './App.css';
 
-export const App = () => {
+const App = () => {
     const tasks = [
         { name: 'Make todo react app', important: false, id: 1 },
         { name: 'Drink coffee', important: true, id: 2 },
@@ -22,3 +22,5 @@ export const App = () => {
         </div>
     );
 };
+
+export default App;

@@ -1,7 +1,7 @@
 import React from 'react';
 import './TaskItem.css';
 
-export const TaskItem = ({ name, important = false }) => {
+const TaskItem = ({ name, important = false }) => {
 
     const style = {
         color: important ? 'steelblue' : 'black',
@@ -27,3 +27,5 @@ export const TaskItem = ({ name, important = false }) => {
         </span>
     );
 };
+
+export default TaskItem;

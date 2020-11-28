@@ -1,11 +1,13 @@
 import React from 'react';
 import './Header.css';
 
-export const Header = ({ toDo, done }) => {
+const Header = ({ toDo, done }) => {
     return (
         <div className='header d-flex'>
             <h1>Daily Tasks</h1>
             <h2>{toDo} more to do, {done} done</h2>
         </div>
     )
-}
+};
+
+export default Header;
