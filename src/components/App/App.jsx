@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-import Header from '../Header/Header';
-import SearchBar from '../SearchBar/SearchBar';
-import TaskFilter from '../TaskFilter/TaskFilter';
+import Header from '../Header';
+import SearchBar from '../SearchBar';
+import TaskAddBar from '../TaskAddBar';
+import TaskFilter from '../TaskFilter';
 import Tasks from '../Tasks';
 import './App.css';
 
 export default class App extends Component {
+
+    lastId = 100;
 
     state = {
         tasks: [
@@ -24,6 +27,20 @@ export default class App extends Component {
         });
     };
 
+    addTask = (text) => {
+        const newTask = {
+            name: text,
+            important: false,
+            id: this.lastId++
+        };
+
+        this.setState(({ tasks }) => {
+            return {
+                tasks: [...tasks, newTask]
+            };
+        });
+    };
+
     render() {
         return (
             <div className='app'>
@@ -35,6 +52,8 @@ export default class App extends Component {
                 <Tasks
                     tasks={this.state.tasks}
                     onDeleteClick={this.deleteTask} />
+                <TaskAddBar
+                    onAddClick={this.addTask} />
             </div>
         );
     }
