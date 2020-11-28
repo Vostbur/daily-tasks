@@ -41,6 +41,14 @@ export default class App extends Component {
         });
     };
 
+    switchDoneState = (id) => {
+        console.log(id);
+    };
+
+    switchImportantState = (id) => {
+        console.log(id);
+    };
+
     render() {
         return (
             <div className='app'>
@@ -51,7 +59,9 @@ export default class App extends Component {
                 </div>
                 <Tasks
                     tasks={this.state.tasks}
-                    onDeleteClick={this.deleteTask} />
+                    onDeleteClick={this.deleteTask}
+                    onDoneClick={this.switchDoneState}
+                    onImportantClick={this.switchImportantState} />
                 <TaskAddBar
                     onAddClick={this.addTask} />
             </div>

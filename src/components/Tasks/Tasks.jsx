@@ -2,7 +2,8 @@ import React from 'react';
 import TaskItem from '../TaskItem';
 import './Tasks.css';
 
-const Tasks = ({ tasks, onDeleteClick }) => {
+const Tasks = ({ tasks, onDeleteClick,
+                 onDoneClick, onImportantClick }) => {
     const taskList = tasks.map((t) => {
         const { id, ...items } = t;
 
@@ -10,7 +11,9 @@ const Tasks = ({ tasks, onDeleteClick }) => {
             <li className='list-group-item' key={id}>
                 <TaskItem
                     {...items}
-                    onDeleteClick={() => onDeleteClick(id)} />
+                    onDeleteClick={() => onDeleteClick(id)}
+                    onDoneClick={() => onDoneClick(id)}
+                    onImportantClick={() => onImportantClick(id)} />
             </li>
         );
     });

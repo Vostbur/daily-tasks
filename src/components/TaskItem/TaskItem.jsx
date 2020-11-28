@@ -2,31 +2,9 @@ import React, { Component } from 'react';
 import './TaskItem.css';
 
 export default class TaskItem extends Component {
-
-    state = {
-        done: false,
-        important: false
-    };
-
-    onNameClick = () => {
-        this.setState(({ done }) => {
-            return {
-                done: !done
-            }
-        });
-    };
-
-    onImportantClick = () => {
-        this.setState(({ important }) => {
-            return {
-                important: !important
-            }
-        });
-    };
-
     render() {
-        const { name, onDeleteClick } = this.props;
-        const { done, important } = this.state;
+        const { name, onDeleteClick, onDoneClick, 
+                onImportantClick, done, important } = this.props;
 
         let classNames = 'task-item';
         if (done) {
@@ -40,13 +18,13 @@ export default class TaskItem extends Component {
             <span className={classNames}>
                 <span
                     className='task-item-name'
-                    onClick={this.onNameClick}>
+                    onClick={onDoneClick}>
                     {name}
                 </span>
 
                 <button type="button"
                     className="btn btn-outline-success btn-sm float-right"
-                    onClick={this.onImportantClick}>
+                    onClick={onImportantClick}>
                     <i className="fa fa-exclamation" />
                 </button>
 
