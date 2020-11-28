@@ -8,14 +8,23 @@ import './App.css';
 
 export default class App extends Component {
 
-    lastId = 100;
+    lastId = 1;
 
     state = {
         tasks: [
-            { name: 'Make todo react app', important: false, id: 1 },
-            { name: 'Drink coffee', important: true, id: 2 },
-            { name: 'Have dinner', important: false, id: 3 }
+            this.createTaskItem('Make todo react app'),
+            this.createTaskItem('Drink coffee'),
+            this.createTaskItem('Have dinner')
         ]
+    };
+
+    createTaskItem(name) {
+        return {
+            name,
+            done: false,
+            important: false,
+            id: this.lastId++
+        }
     };
 
     deleteTask = (id) => {
@@ -28,11 +37,7 @@ export default class App extends Component {
     };
 
     addTask = (text) => {
-        const newTask = {
-            name: text,
-            important: false,
-            id: this.lastId++
-        };
+        const newTask = this.createTaskItem(text);
 
         this.setState(({ tasks }) => {
             return {
@@ -41,24 +46,48 @@ export default class App extends Component {
         });
     };
 
+    switchProperty(arr, id, propName) {
+        const idx = arr.findIndex((e) => e.id === id);
+        const oldTask = arr[idx];
+        const newTask = { ...oldTask, [propName]: !oldTask[propName] };
+        return [
+                ...arr.slice(0, idx),
+                newTask,
+                ...arr.slice(idx + 1)
+        ]
+    }
+
     switchDoneState = (id) => {
-        console.log(id);
+        this.setState(({ tasks }) => {
+            return {
+                tasks: this.switchProperty(tasks, id, 'done')
+            };
+        });
     };
 
     switchImportantState = (id) => {
-        console.log(id);
+        this.setState(({ tasks }) => {
+            return {
+                tasks: this.switchProperty(tasks, id, 'important')
+            };
+        });
     };
 
     render() {
+
+        const { tasks } = this.state;
+        const doneCount = tasks.filter((e) => e.done).length;
+        const todoCount = tasks.length - doneCount;
+
         return (
             <div className='app'>
-                <Header toDo={1} done={3} />
+                <Header toDo={todoCount} done={doneCount} />
                 <div className="top-panel d-flex">
                     <SearchBar />
                     <TaskFilter />
                 </div>
                 <Tasks
-                    tasks={this.state.tasks}
+                    tasks={tasks}
                     onDeleteClick={this.deleteTask}
                     onDoneClick={this.switchDoneState}
                     onImportantClick={this.switchImportantState} />
