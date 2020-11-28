@@ -1,12 +1,8 @@
 import React from 'react';
+import './SearchBar.css';
 
 export const SearchBar = () => {
-    const searchText = 'Type here for search';
-    const searchStyle = {
-        fontSize: '20px'
-    };
-
     return <input
-        placeholder={searchText}
-        style={searchStyle} />;
+        className='form-control search-input'
+        placeholder='type to search' />;
 };
