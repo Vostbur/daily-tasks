@@ -18,7 +18,9 @@ const App = () => {
                 <SearchBar />
                 <TaskFilter />
             </div>
-            <Tasks tasks={tasks} />
+            <Tasks
+                tasks={tasks}
+                onDeleteClick={ (id) => console.log('del', id) } />
         </div>
     );
 };

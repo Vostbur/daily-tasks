@@ -9,19 +9,23 @@ export default class TaskItem extends Component {
     };
 
     onNameClick = () => {
-        this.setState({
-            done: true
+        this.setState(({ done }) => {
+            return {
+                done: !done
+            }
         });
     };
 
     onImportantClick = () => {
-        this.setState({
-            important: true
+        this.setState(({ important }) => {
+            return {
+                important: !important
+            }
         });
     };
 
     render() {
-        const { name } = this.props;
+        const { name, onDeleteClick } = this.props;
         const { done, important } = this.state;
 
         let classNames = 'task-item';
@@ -47,7 +51,8 @@ export default class TaskItem extends Component {
                 </button>
 
                 <button type="button"
-                    className="btn btn-outline-danger btn-sm float-right">
+                    className="btn btn-outline-danger btn-sm float-right"
+                    onClick={onDeleteClick}>
                     <i className="fa fa-trash-o" />
                 </button>
 
