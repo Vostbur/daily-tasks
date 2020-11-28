@@ -16,6 +16,9 @@ export default class TaskAddBar extends Component {
     onSubmit = (e) => {
         e.preventDefault();
         this.props.onAddClick(this.state.name);
+        this.setState({
+            name: ''
+        });
     };
 
     render() {
@@ -26,7 +29,8 @@ export default class TaskAddBar extends Component {
                 <input type='text'
                     className='form-control'
                     onChange={this.onNameChange}
-                    placeholder='What needs to be done' />
+                    placeholder='What needs to be done'
+                    value={this.state.name} />
                 <button className='btn btn-outline-secondary'>
                     Add
                 </button>
