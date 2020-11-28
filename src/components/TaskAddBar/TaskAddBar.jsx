@@ -2,15 +2,35 @@ import React, { Component } from 'react';
 import './TaskAddBar.css';
 
 export default class TaskAddBar extends Component {
+
+    state = {
+        name: ''
+    };
+
+    onNameChange = (e) => {
+        this.setState({
+            name: e.target.value
+        });
+    };
+
+    onSubmit = (e) => {
+        e.preventDefault();
+        this.props.onAddClick(this.state.name);
+    };
+
     render() {
         return (
-            <div className='task-add-bar'>
-                <button
-                    className='btn btn-outline-secondary'
-                    onClick={() => this.props.onAddClick('HELLO')}>
-                    Add task
+            <form className='task-add-bar d-flex'
+                onSubmit={this.onSubmit} >
+
+                <input type='text'
+                    className='form-control'
+                    onChange={this.onNameChange}
+                    placeholder='What needs to be done' />
+                <button className='btn btn-outline-secondary'>
+                    Add
                 </button>
-            </div>
+            </form>
         )
     }
 }
