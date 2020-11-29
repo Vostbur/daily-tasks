@@ -12,13 +12,26 @@ export default class App extends Component {
 
     state = {
         tasks: [
-            this.createTaskItem('Make todo react app'),
+            this.createTaskItem('Have a nice day!'),
             this.createTaskItem('Drink coffee'),
-            this.createTaskItem('Have dinner')
+            this.createTaskItem('Worry about all that shit that happened yesterday')
         ],
         searchText: '',
         filter: 'all'
     };
+
+    componentDidMount() {
+        const storedTasks = localStorage.getItem('state');
+        if (storedTasks !== null) {
+            const parsedTasks = JSON.parse(storedTasks);
+            this.setState({ tasks: parsedTasks });
+        }
+    }
+
+    saveState = (tasks) => {
+        const jsonifyTasks = JSON.stringify(tasks);
+        localStorage.setItem('state', jsonifyTasks);
+    }
 
     createTaskItem(name) {
         return {
@@ -32,6 +45,7 @@ export default class App extends Component {
     deleteTask = (id) => {
         this.setState(({ tasks }) => {
             const idx = tasks.findIndex((e) => e.id === id);
+            this.saveState([...tasks.slice(0, idx), ...tasks.slice(idx + 1)]);
             return {
                 tasks: [...tasks.slice(0, idx), ...tasks.slice(idx + 1)]
             };
@@ -42,6 +56,7 @@ export default class App extends Component {
         const newTask = this.createTaskItem(text);
 
         this.setState(({ tasks }) => {
+            this.saveState([...tasks, newTask]);
             return {
                 tasks: [...tasks, newTask]
             };
@@ -52,6 +67,11 @@ export default class App extends Component {
         const idx = arr.findIndex((e) => e.id === id);
         const oldTask = arr[idx];
         const newTask = { ...oldTask, [propName]: !oldTask[propName] };
+        this.saveState([
+            ...arr.slice(0, idx),
+            newTask,
+            ...arr.slice(idx + 1)
+        ]);
         return [
             ...arr.slice(0, idx),
             newTask,
@@ -109,7 +129,6 @@ export default class App extends Component {
     };
 
     render() {
-
         const { tasks, searchText, filter } = this.state;
         const visibleTasks = this.filter(
             this.search(tasks, searchText), filter);

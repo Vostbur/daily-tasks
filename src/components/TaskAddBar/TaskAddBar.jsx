@@ -25,14 +25,13 @@ export default class TaskAddBar extends Component {
         return (
             <form className='task-add-bar d-flex'
                 onSubmit={this.onSubmit} >
-
                 <input type='text'
                     className='form-control'
                     onChange={this.onNameChange}
-                    placeholder='What needs to be done'
+                    placeholder='what needs to be done'
                     value={this.state.name} />
                 <button className='btn btn-outline-secondary'>
-                    Add
+                    <i className="fa fa-pencil" />
                 </button>
             </form>
         )
