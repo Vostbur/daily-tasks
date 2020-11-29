@@ -91,6 +91,10 @@ export default class App extends Component {
         });
     };
 
+    onFilterClick = (filter) => {
+        this.setState({ filter });
+    };
+
     filter(tasks, filter) {
         switch (filter) {
             case 'all':
@@ -119,7 +123,9 @@ export default class App extends Component {
                 <div className="top-panel d-flex">
                     <SearchBar
                         onSearchChange={this.onSearchChange} />
-                    <TaskFilter />
+                    <TaskFilter
+                        filter={filter}
+                        onFilterClick={this.onFilterClick} />
                 </div>
                 <Tasks
                     tasks={visibleTasks}
