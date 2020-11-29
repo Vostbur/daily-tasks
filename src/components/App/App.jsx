@@ -15,7 +15,9 @@ export default class App extends Component {
             this.createTaskItem('Make todo react app'),
             this.createTaskItem('Drink coffee'),
             this.createTaskItem('Have dinner')
-        ]
+        ],
+        searchText: '',
+        filter: 'all'
     };
 
     createTaskItem(name) {
@@ -51,9 +53,9 @@ export default class App extends Component {
         const oldTask = arr[idx];
         const newTask = { ...oldTask, [propName]: !oldTask[propName] };
         return [
-                ...arr.slice(0, idx),
-                newTask,
-                ...arr.slice(idx + 1)
+            ...arr.slice(0, idx),
+            newTask,
+            ...arr.slice(idx + 1)
         ]
     }
 
@@ -73,9 +75,41 @@ export default class App extends Component {
         });
     };
 
+    onSearchChange = (searchText) => {
+        this.setState({ searchText });
+    };
+
+    search(tasks, text) {
+        if (text.length === 0) {
+            return tasks;
+        };
+
+        return tasks.filter((t) => {
+            return t.name
+                .toLowerCase()
+                .indexOf(text.toLowerCase()) > -1;
+        });
+    };
+
+    filter(tasks, filter) {
+        switch (filter) {
+            case 'all':
+                return tasks;
+            case 'active':
+                return tasks.filter((t) => !t.done);
+            case 'done':
+                return tasks.filter((t) => t.done);
+            default:
+                return tasks;
+        }
+    };
+
     render() {
 
-        const { tasks } = this.state;
+        const { tasks, searchText, filter } = this.state;
+        const visibleTasks = this.filter(
+            this.search(tasks, searchText), filter);
+
         const doneCount = tasks.filter((e) => e.done).length;
         const todoCount = tasks.length - doneCount;
 
@@ -83,11 +117,12 @@ export default class App extends Component {
             <div className='app'>
                 <Header toDo={todoCount} done={doneCount} />
                 <div className="top-panel d-flex">
-                    <SearchBar />
+                    <SearchBar
+                        onSearchChange={this.onSearchChange} />
                     <TaskFilter />
                 </div>
                 <Tasks
-                    tasks={tasks}
+                    tasks={visibleTasks}
                     onDeleteClick={this.deleteTask}
                     onDoneClick={this.switchDoneState}
                     onImportantClick={this.switchImportantState} />
