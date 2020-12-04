@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import uniqueId from 'lodash/uniqueId';
 import Header from '../Header';
 import SearchBar from '../SearchBar';
 import TaskAddBar from '../TaskAddBar';
@@ -8,7 +9,7 @@ import './App.css';
 
 export default class App extends Component {
 
-    lastId = 1;
+    // lastId = 1;
 
     state = {
         tasks: [
@@ -34,11 +35,12 @@ export default class App extends Component {
     }
 
     createTaskItem(name) {
+        let l = name.length > 5 ? 5 : name.length
         return {
             name,
             done: false,
             important: false,
-            id: this.lastId++
+            id: uniqueId(name.slice(0, l))
         }
     };
 
